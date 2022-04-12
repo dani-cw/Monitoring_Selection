@@ -160,9 +160,9 @@ def main():
         
         # Print results.
         if(isValid):
-            print(transaction_id, 'CBK:', has_cbk, 'Recomendation:', 'Approve')
+            print('ID:',transaction_id, '| CBK:', has_cbk, '| Recomendation:', 'Approve')
         else:
-            print(transaction_id, 'CBK:', has_cbk, 'Recomendation:', 'Deny')
+            print('ID:', transaction_id, '| CBK:', has_cbk, '| Recomendation:', 'Deny')
         
         
     # Script evaluation.
