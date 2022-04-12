@@ -34,15 +34,15 @@ SELECT * FROM transactions_data WHERE has_cbk IS true ORDER BY transaction_date 
 ``` SQL
 transaction_id,merchant_id,user_id,card_number,transaction_date,transaction_time,transaction_amount,device_id,has_cbk
 
-* 2934,21323331,77130,75710,"554482******7640","2019-11-08","23:05:13.814924",540.81,NULL,True
-* 2933,21323330,77130,75710,"554482******7640","2019-11-08","23:11:18.971808",320.96,NULL,True
-* 2932,21323329,77130,75710,"554482******7640","2019-11-08","23:12:00.465991",254.37,NULL,True
-* 2931,21323328,77130,75710,"554482******7640","2019-11-08","23:14:35.977303",386.82,NULL,True
-* 2930,21323327,77130,75710,"554482******7640","2019-11-08","23:15:05.322183",599.13,NULL,True
-* 2929,21323326,77130,75710,"554482******7640","2019-11-08","23:17:08.619645",473.44,NULL,True
-* 2928,21323325,77130,75710,"554482******7640","2019-11-08","23:18:28.634342",254.25,NULL,True
-* 2924,21323321,77130,75710,"554482******7640","2019-11-09","00:17:27.310174",559.01,NULL,True
-* 2923,21323320,77130,75710,"554482******7640","2019-11-09","00:58:24.689418",593.78,NULL,True
+2934,21323331,77130,75710,"554482******7640","2019-11-08","23:05:13.814924",540.81,NULL,True
+2933,21323330,77130,75710,"554482******7640","2019-11-08","23:11:18.971808",320.96,NULL,True
+2932,21323329,77130,75710,"554482******7640","2019-11-08","23:12:00.465991",254.37,NULL,True
+2931,21323328,77130,75710,"554482******7640","2019-11-08","23:14:35.977303",386.82,NULL,True
+2930,21323327,77130,75710,"554482******7640","2019-11-08","23:15:05.322183",599.13,NULL,True
+2929,21323326,77130,75710,"554482******7640","2019-11-08","23:17:08.619645",473.44,NULL,True
+2928,21323325,77130,75710,"554482******7640","2019-11-08","23:18:28.634342",254.25,NULL,True
+2924,21323321,77130,75710,"554482******7640","2019-11-09","00:17:27.310174",559.01,NULL,True
+2923,21323320,77130,75710,"554482******7640","2019-11-09","00:58:24.689418",593.78,NULL,True
 ```
 
 * We can also find some suggestions of Card Block Fraud, where a script generate a block of card numbers, used by the fraudster to brute force their way into an approval. This can be shown by the small interval between transactions, the same BIN (first 6 digits), and _usually_ one purchase per card, e.g. ```CSV '406655 ...' ```
@@ -96,13 +96,6 @@ SELECT * FROM transactions_data WHERE merchant_id = 1308 ORDER BY transaction_da
 * By running a script for detecting which merchants **ONLY** have ```has_cbk == true```, we can see ```merchant_id = 1308``` is a probable fraudster.
 
 ``` python
-from asyncio.windows_events import NULL
-from operator import truediv
-from os import device_encoding
-from pickle import TRUE
-from unittest import result
-import pandas as pd
-
 def validate_merchant(merchants, transaction):
     
     merchant_id = transaction[2]
@@ -198,9 +191,6 @@ def main():
                 print(key)    
     # For SQL query usage, drop the results between 'transactions_data WHERE merchant_id IN (HERE)' 
     # or  'transactions_data WHERE user_id IN (HERE)'.
-
-if __name__ == '__main__':
-    main()
 ```
 * Which returns:
 ```
@@ -278,20 +268,35 @@ if __name__ == '__main__':
 ---
 ### 2. In addition to the spreadsheet data, what other data would you look at to try to find patterns of possible frauds?
 
-> devices change (could suggest user hacK)
+> IP adress and/or coordinates of user device usage:
+* Large discrepancies between places of usage for a single user could suggest security breaches.
+* The identity theft could be caused from a variety of reasons, from convenience, to social engineering or hacking.
 
-> address differences between devices
+> User and merchant personal data (CPF, full name, family ties):
+* Finding links between merchant and user might indicate self-funding or family-funding, using payment advancements for working capital. 
+* Fake sales might be done envolving those agents for money laundering activity.
 
-> in case of e-market, shipping address (many sales, same address, could suggest a dropping point)
+> Merchant business data (CNPJ, business partness, commercial activity, anticipate rule):
+* Sales between business associates suggests self-funding or business-funding.
+* Commercial activity indicate certain transactions with unusual values might not be regular.
+* Additionaly, some commercial activities might restrict certain payment methods (e.g. asking to deliver ready-to-eat perishable food to another state)
 
-> card holder and merchant name, socio list (sf, ff, bs)
+> Public or private presence (of merchants and users) in white, warn or hot lists: 
+* White lists allow the completition of suspicious transactions that might otherwise be blocked, because of already justifies behaviour.
+* Warm lists warn users and merchants whom are already being investigated for suspicious behaviour. Transactions must be carefully analyzed, and might generate a block.
+* Hot lists are responsible for warning about proven fraudsters, or merchants/users involved with illicit activies, like involvement with terrorism financing, for example.
 
-> for similar reasons, if needed deep investigation, merchant and user CPF
+> Time between transaction and chargeback request, and reason given:
+* Treatment for satisfaction or non-reception chargebacks is severely diffent from credit card fraud or identity theft frauds. This changes the outcome for the merchant and user, as well as the analysis made.
+* Return policies might be abused by consumer fraudsters, whom request devolution, and chargebacks, by cause of insatisfaction. The reiterated ocurrence, or a long period before asking for devolution, might help reduce those ocurrences.
 
-> merchant CNPJ, to check activity on RF, quadro societário
+> Denied transaction requests:
+* Non successfull transaction requests help on denying many frauds before they actually happen. Card block fraud can be stopped by blocking users on the first attempts. 
+* Many denied transactions should warm list the user and merchant, for further investigation, and possibly blocking, white listing, or other adequate measures.
 
-> merchant activity (helps justify value of the transactions, as well as if it's a 'deliverable' product or service)
+> For e-markets, shipping address:
+* Many sales to the same shipping adress might suggest a drop off point, which criminal organizations can use to collect the bought products without compromising their address.
 
-> time when cbk happened (could alert bad intencionado consumers, and show a returning policy abuse pattern)
+> Merchant social media pages and transaction records can't be quickly analyzed through a data spreadsheet, but are useful for manual checks.
 
-> public or private presence in warm, hot or white lists, for both merchants and users (terrorism funding, politically protected, etc) 
+
