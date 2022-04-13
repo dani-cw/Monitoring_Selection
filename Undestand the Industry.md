@@ -14,7 +14,7 @@
 
 * **Payment Gateway** is the first player in the payment flow. It sends the payment request, and receives responses in order to know if it was approved. Acts as a terminal, integrating th transactions between all the players.
   
-* The **Acquirer** will actually process the information sent by the Gateway, providing the various payment conditions, as it is responsible for the relationship in the payment card arrangement. It manages communication between credit associations and businesses, ensuring transaction security, respecting various rules and guidelines. It will be the responsible in case of a data breach.
+* The **Acquirer** will actually process the information sent by the Gateway, providing the various payment conditions, as it is responsible for the relationship in the payment card arrangement. It manages communication between credit associations and businesses, ensuring transaction security, fraud protection, and respecting various rules and guidelines. It will be the responsible in case of a data breach.
   
 * Finally, the **sub-acquirer** is an intermediary player between the acquirer and store, not always present. Although it process payments and transmits the data, it doesn't completely replace the acquirer due to the lack of autonomy to perform all of their functions. Although usually costly for merchants, it's sometimes an important step, specially for small stores, because of the provided anti-fraud system and ease of integration. It can be usually identified by the redirection to its own page during the final steps of the checkout, which is sometimes responsible for withdraw from the buyer.
   
