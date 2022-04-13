@@ -64,12 +64,12 @@ transaction_id,merchant_id,user_id,card_number,transaction_date,transaction_time
 693,21321090,1308,79054,"406655******7343","2019-11-29","12:51:17.927921",2231.98,101848,True
 ```
 
-* Note that the ```user_id``` isn't necesseraly the same, as the perpetrator might try using more then one user to avoid account locking. Notice, as well, the irregular time intervals.
+* Note that the ```user_id``` isn't necessarily the same, as the perpetrator might try using more then one user to avoid account locking. Notice, as well, the irregular time intervals.
   
 * In fact, if we filter by ```merchant_id```, it can be noted that ```merchant_id == 1308``` is usually involved on the ```CSV '406655 ...' ``` cases, maybe as a victim, but probably as the perpetrator.
 
 ``` SQL
--- Ordering by merchants can help seeing theones with a lot of chargebacks.
+-- Ordering by merchants can help seeing the ones with a lot of chargebacks.
 SELECT * FROM transactions_data WHERE has_cbk IS true ORDER BY merchant_id ASC
 
 -- With the following query, we can analyze the whole merchant_id = 1308 transaction history
@@ -263,39 +263,40 @@ def main():
 ```
 * Using the same script, but for users, you can also find out ```user_id = 75710```, responsible for the bust-out fraud activity earlier, also only have transactions with ```has_cbk = true```.
 
-* You can observe similar patterns and behaviours in other transactions, but the aforementioned examples sum up the reason for most of the chargebacks and probable frauds, at lease with the amount of data given.
+* You can observe similar patterns and behaviors in other transactions, but the aforementioned examples sum up the reason for most of the chargebacks and probable frauds, at lease with the amount of data given.
 
 ---
 ### 2. In addition to the spreadsheet data, what other data would you look at to try to find patterns of possible frauds?
 
-> IP adress and/or coordinates of user device usage:
+> IP address and/or coordinates of user device usage:
 * Large discrepancies between places of usage for a single user could suggest security breaches.
 * The identity theft could be caused from a variety of reasons, from convenience, to social engineering or hacking.
+* IPs from different countries, or known VPN might flag illegal activity.
 
 > User and merchant personal data (CPF, full name, family ties):
 * Finding links between merchant and user might indicate self-funding or family-funding, using payment advancements for working capital. 
-* Fake sales might be done envolving those agents for money laundering activity.
+* Fake sales might be done involving those agents for money laundering activity.
 
-> Merchant business data (CNPJ, business partness, commercial activity, anticipate rule):
+> Merchant business data (CNPJ, business partners, commercial activity, anticipate rule):
 * Sales between business associates suggests self-funding or business-funding.
 * Commercial activity indicate certain transactions with unusual values might not be regular.
-* Additionaly, some commercial activities might restrict certain payment methods (e.g. asking to deliver ready-to-eat perishable food to another state)
+* Additionally, some commercial activities might restrict certain payment methods (e.g. asking to deliver ready-to-eat perishable food to another state)
 
 > Public or private presence (of merchants and users) in white, warn or hot lists: 
-* White lists allow the completition of suspicious transactions that might otherwise be blocked, because of already justifies behaviour.
-* Warm lists warn users and merchants whom are already being investigated for suspicious behaviour. Transactions must be carefully analyzed, and might generate a block.
-* Hot lists are responsible for warning about proven fraudsters, or merchants/users involved with illicit activies, like involvement with terrorism financing, for example.
+* White lists allow the completion of suspicious transactions that might otherwise be blocked, because of already justifies behavior.
+* Warm lists warn users and merchants whom are already being investigated for suspicious behavior. Transactions must be carefully analyzed, and might generate a block.
+* Hot lists are responsible for warning about proven fraudsters, or merchants/users involved with illicit activities, like involvement with terrorism financing, for example.
 
 > Time between transaction and chargeback request, and reason given:
-* Treatment for satisfaction or non-reception chargebacks is severely diffent from credit card fraud or identity theft frauds. This changes the outcome for the merchant and user, as well as the analysis made.
-* Return policies might be abused by consumer fraudsters, whom request devolution, and chargebacks, by cause of insatisfaction. The reiterated ocurrence, or a long period before asking for devolution, might help reduce those ocurrences.
+* Treatment for satisfaction or non-reception chargebacks severely differs from credit card fraud or identity theft frauds. This changes the outcome for the merchant and user, as well as the analysis made.
+* Return policies might be abused by consumer fraudsters, whom request devolution, and chargebacks, by cause of dissatisfaction. The reiterated occurrence, or a long period before asking for devolution, might help reduce those occurrences.
 
 > Denied transaction requests:
-* Non successfull transaction requests help on denying many frauds before they actually happen. Card block fraud can be stopped by blocking users on the first attempts. 
+* Non successful transaction requests help on denying many frauds before they actually happen. Card block fraud can be stopped by blocking users on the first attempts. 
 * Many denied transactions should warm list the user and merchant, for further investigation, and possibly blocking, white listing, or other adequate measures.
 
 > For e-markets, shipping address:
-* Many sales to the same shipping adress might suggest a drop off point, which criminal organizations can use to collect the bought products without compromising their address.
+* Many sales to the same shipping address might suggest a drop off point, which criminal organizations can use to collect the bought products without compromising their address.
 
 > Merchant social media pages and transaction records can't be quickly analyzed through a data spreadsheet, but are useful for manual checks.
 
