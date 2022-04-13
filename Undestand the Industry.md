@@ -31,7 +31,7 @@
 
 * With that said, fraud is only one of the reason for disputes, the other three main being authorization (merchant conduct not allowed), processing (wrong information was used) and consumer dispute (related to the product or service). 
 
-* Disputes, therefor, can be considered any disagreement between merchant and consumer, fraud being merely one of the reasons.
+* Disputes, therefore, can be considered any disagreement between merchant and consumer, fraud being merely one of the reasons.
   
 * Fraud is an type of dispute, caused by a consumer being impersonated, or by their data being stolen, and used for unauthorized transactions.
   
