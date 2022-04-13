@@ -1,4 +1,4 @@
-# 3.1 Undestand The Industry
+# 3.1 Understand The Industry
 
 ### 1. Explain the money flow and the information flow in the acquirer market and the role of the main players.
 
